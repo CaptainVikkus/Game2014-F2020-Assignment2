@@ -3337,6 +3337,7 @@ GameObject:
   - component: {fileID: 1167126241}
   - component: {fileID: 1167126244}
   - component: {fileID: 1167126245}
+  - component: {fileID: 1167126246}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3475,6 +3476,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.73, y: 0.73}
   m_EdgeRadius: 0
+--- !u!114 &1167126246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167126240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e96cfeca1a617b4d809005ac631deab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystick: {fileID: 1405681827}
+  joystickHorizontalSensitivity: 0.2
+  joystickVerticalSensitivity: 0.2
+  horizontalForce: 500
+  verticalForce: 500
+  isGrounded: 0
+  isJumping: 0
+  isCrouching: 0
+  spawnPoint: {fileID: 603209546}
 --- !u!1 &1192482256
 GameObject:
   m_ObjectHideFlags: 0
@@ -4238,6 +4260,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1405681827 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
+  m_PrefabInstance: {fileID: 505491937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45977bbae16431c46a013576a1aea384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1486357473
 GameObject:
   m_ObjectHideFlags: 0
