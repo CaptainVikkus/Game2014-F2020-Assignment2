@@ -25,6 +25,9 @@ public class PlayerBehaviour : MonoBehaviour
     public bool isJumping;
     public Transform spawnPoint;
 
+    public AudioSource coinSound;
+    public AudioSource hurtSound;
+
     public LayerMask platforms;
     public LayerMask hazards;
 
@@ -101,6 +104,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void Die()
     {
+        hurtSound.Play();
         transform.position = spawnPoint.position;
         m_rigidBody2D.velocity = new Vector2(0, 0);
         lives.LoseLife();
@@ -136,6 +140,7 @@ public class PlayerBehaviour : MonoBehaviour
         {// Get Points, Kill Coin
             ScoreBar.score += 50;
             Destroy(other.gameObject);
+            coinSound.Play();
         }
     }
 }
