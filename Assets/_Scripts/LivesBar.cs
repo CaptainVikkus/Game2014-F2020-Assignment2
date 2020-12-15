@@ -8,7 +8,7 @@ public class LivesBar : MonoBehaviour
     public GameObject life2;
     public GameObject life3;
 
-    private int lives;
+    private int lives = 3;
     public int Lives { get { return lives; } }
  
 
@@ -17,6 +17,9 @@ public class LivesBar : MonoBehaviour
         switch (lives)
         {
             case 0:
+                life1.SetActive(false);
+                life2.SetActive(false);
+                life3.SetActive(false);
                 break;
             case 1:
                 life1.SetActive(true);
@@ -39,17 +42,20 @@ public class LivesBar : MonoBehaviour
                 life3.SetActive(false);
                 break;
         }
+        Debug.Log("Lives: " + lives.ToString());
     }
 
     public void AddLife()
     {
         lives++;
         if (lives > 3) { lives = 3; }
+        _HideLives();
     }
 
     public void LoseLife()
     {
         lives--;
         if (lives < 0) { lives = 0; }
+        _HideLives();
     }
 }

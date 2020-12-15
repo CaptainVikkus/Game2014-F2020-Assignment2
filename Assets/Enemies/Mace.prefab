@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6625964971984457280}
   - component: {fileID: 575422507692199758}
   - component: {fileID: 2138476657018251366}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Mace
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,5 +152,5 @@ MonoBehaviour:
     m_Bits: 512
   jumpForce: 200
   isGrounded: 0
-  jumpCooldown: 0
+  isJumpCooldown: 0
   jumpCooldownTime: 1

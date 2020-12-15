@@ -16,6 +16,7 @@ public class PlayerBehaviour : MonoBehaviour
     public LivesBar lives;
     public ScoreBar score;
     public Joystick joystick;
+    public GameObject camera;
     public float joystickHorizontalSensitivity;
     public float joystickVerticalSensitivity;
     public float horizontalForce;
@@ -31,7 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
     private SpriteRenderer m_spriteRenderer;
     private Animator m_animator;
 
-    private RaycastHit2D groundHit;
+    //private RaycastHit2D groundHit;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,7 @@ public class PlayerBehaviour : MonoBehaviour
     void FixedUpdate()
     {
         _Move();
+        _Camera();
     }
 
     void _Move()
@@ -91,6 +93,12 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    void _Camera()
+    {
+        camera.transform.position = transform.position
+            + new Vector3(joystick.Horizontal / 2, joystick.Vertical / 2, camera.transform.position.z);
+    }
+
     public void Die()
     {
         transform.position = spawnPoint.position;
@@ -103,6 +111,10 @@ public class PlayerBehaviour : MonoBehaviour
         if (((1 << other.gameObject.layer) & platforms) != 0)
         {
             isGrounded = true;
+        }
+        if (other.gameObject.tag == "Enemy")
+        {
+            Die();
         }
     }
 
@@ -119,6 +131,11 @@ public class PlayerBehaviour : MonoBehaviour
         if (((1<<other.gameObject.layer) & hazards) != 0)
         {// Hazard hit, die
             Die();
+        }
+        if (other.gameObject.tag == "Coin")
+        {// Get Points, Kill Coin
+            ScoreBar.score += 50;
+            Destroy(other.gameObject);
         }
     }
 }
