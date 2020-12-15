@@ -2,8 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum PlayerAnimType
+{
+    IDLE,
+    RUN,
+    JUMPUP,
+    JUMPDOWN
+}
+
 public class PlayerBehaviour : MonoBehaviour
 {
+    public LivesBar lives;
+    public ScoreBar score;
     public Joystick joystick;
     public float joystickHorizontalSensitivity;
     public float joystickVerticalSensitivity;
@@ -11,12 +22,16 @@ public class PlayerBehaviour : MonoBehaviour
     public float verticalForce;
     public bool isGrounded;
     public bool isJumping;
-    public bool isCrouching;
     public Transform spawnPoint;
+
+    public LayerMask platforms;
+    public LayerMask hazards;
 
     private Rigidbody2D m_rigidBody2D;
     private SpriteRenderer m_spriteRenderer;
     private Animator m_animator;
+
+    private RaycastHit2D groundHit;
 
     // Start is called before the first frame update
     void Start()
@@ -36,25 +51,25 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (isGrounded)
         {
-            if (!isJumping && !isCrouching)
+            if (!isJumping)
             {
                 if (joystick.Horizontal > joystickHorizontalSensitivity)
                 {
                     // move right
                     m_rigidBody2D.AddForce(Vector2.right * horizontalForce * Time.deltaTime);
                     m_spriteRenderer.flipX = false;
-                    //m_animator.SetInteger("AnimState", (int)PlayerAnimType.RUN);
+                    m_animator.SetInteger("AnimState", (int)PlayerAnimType.RUN);
                 }
                 else if (joystick.Horizontal < -joystickHorizontalSensitivity)
                 {
                     // move left
                     m_rigidBody2D.AddForce(Vector2.left * horizontalForce * Time.deltaTime);
                     m_spriteRenderer.flipX = true;
-                    //m_animator.SetInteger("AnimState", (int)PlayerAnimType.RUN);
+                    m_animator.SetInteger("AnimState", (int)PlayerAnimType.RUN);
                 }
                 else
                 {
-                    //m_animator.SetInteger("AnimState", (int)PlayerAnimType.IDLE);
+                    m_animator.SetInteger("AnimState", (int)PlayerAnimType.IDLE);
                 }
             }
 
@@ -62,32 +77,30 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 // jump
                 m_rigidBody2D.AddForce(Vector2.up * verticalForce);
-                //m_animator.SetInteger("AnimState", (int)PlayerAnimType.JUMP);
+                m_animator.SetInteger("AnimState", (int)PlayerAnimType.JUMPUP);
                 isJumping = true;
             }
             else
             {
                 isJumping = false;
             }
-
-            if ((joystick.Vertical < -joystickVerticalSensitivity) && (!isJumping))
-            {
-                // crouch
-                //m_animator.SetInteger("AnimState", (int)PlayerAnimType.CROUCH);
-                isCrouching = true;
-            }
-            else
-            {
-                isCrouching = false;
-            }
-
         }
+        else if (m_rigidBody2D.velocity.y < 0)
+        {
+            m_animator.SetInteger("AnimState", (int)PlayerAnimType.JUMPDOWN);
+        }
+    }
 
+    public void Die()
+    {
+        transform.position = spawnPoint.position;
+        m_rigidBody2D.velocity = new Vector2(0, 0);
+        lives.LoseLife();
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Platform"))
+        if (((1 << other.gameObject.layer) & platforms) != 0)
         {
             isGrounded = true;
         }
@@ -95,7 +108,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Platform"))
+        if (((1 << other.gameObject.layer) & platforms) != 0)
         {
             isGrounded = false;
         }
@@ -103,10 +116,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // respawn
-        if (other.gameObject.CompareTag("Hazard"))
-        {
-            transform.position = spawnPoint.position;
+        if (((1<<other.gameObject.layer) & hazards) != 0)
+        {// Hazard hit, die
+            Die();
         }
     }
 }
