@@ -205,6 +205,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba90f5c15bd06d34f86c7f5b2793c29a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circle: {fileID: 1763119671857578992}
+  platformCollider: {fileID: 4633307373832789740}
+  fallTime: 3
+  fallHeight: 0
+  fallspeed: 1
+  falling: 0
+  respawnTime: 3
 --- !u!1 &1763119672921686227
 GameObject:
   m_ObjectHideFlags: 0
