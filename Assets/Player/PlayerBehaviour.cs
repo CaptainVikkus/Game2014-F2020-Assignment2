@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public enum PlayerAnimType
 {
@@ -108,6 +108,10 @@ public class PlayerBehaviour : MonoBehaviour
         transform.position = spawnPoint.position;
         m_rigidBody2D.velocity = new Vector2(0, 0);
         lives.LoseLife();
+        if (lives.Lives == 0)
+        {
+            SceneManager.LoadScene("LevelLost");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)

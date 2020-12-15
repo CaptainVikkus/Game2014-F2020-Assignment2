@@ -3588,6 +3588,8 @@ MonoBehaviour:
   isGrounded: 0
   isJumping: 0
   spawnPoint: {fileID: 603209546}
+  coinSound: {fileID: 1167126247}
+  hurtSound: {fileID: 1167126248}
   platforms:
     serializedVersion: 2
     m_Bits: 256
@@ -3605,7 +3607,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 902766bcc1f3c6a49884cca6420282ef, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -9988,11 +9990,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6625964971984457286, guid: 4812bddbe778e0645b97426a21f422c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.44
+      value: 34.51
       objectReference: {fileID: 0}
     - target: {fileID: 6625964971984457286, guid: 4812bddbe778e0645b97426a21f422c9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.04
+      value: -0.24
       objectReference: {fileID: 0}
     - target: {fileID: 6625964971984457286, guid: 4812bddbe778e0645b97426a21f422c9, type: 3}
       propertyPath: m_LocalPosition.z
